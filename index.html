@@ -20,8 +20,22 @@
 .table-wrap{overflow-x:auto}.data-table{border-collapse:collapse;width:100%;min-width:650px;font-size:12px}.data-table th,.data-table td{padding:13px 12px;text-align:left;border-bottom:1px solid #27354a}.data-table th{color:var(--muted);font-weight:650}.data-table td{color:#e1e9f6}.data-table tr:hover td{background:#18243a}.site-name{font-weight:750}.status{font-size:10px;padding:5px 7px;border-radius:99px;background:#192c42;color:#a8c5ff}
 .footer{font-size:10px;color:#687b96;line-height:1.6;margin-top:22px}.toast{position:fixed;bottom:20px;right:20px;background:#1a2940;border:1px solid #3a5275;border-radius:12px;padding:12px 16px;font-size:12px;box-shadow:var(--shadow);z-index:10}
 @media(max-width:1050px){.app-shell{grid-template-columns:210px minmax(0,1fr)}.sidebar{padding:20px 10px}.page{padding:24px 20px}.topbar{padding:0 20px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.two-col{grid-template-columns:1fr}}
+
+.monthly-table{min-width:560px}
+#view-monthly .recommend{padding:15px}
+.monthly-metrics .metric-card{min-height:130px}
+@media(max-width:680px){
+  .monthly-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .monthly-metrics .metric-card{padding:13px;border-radius:14px;min-height:124px}
+  .monthly-metrics .metric-value{font-size:clamp(19px,6vw,25px);margin:12px 0 7px}
+  #view-monthly .two-col{grid-template-columns:minmax(0,1fr);gap:10px}
+  #view-monthly .panel{padding:15px}
+  #view-monthly .page-head{gap:12px}
+  #view-monthly .date-pill{font-size:11px}
+  #view-monthly .panel-head{flex-wrap:wrap}
+  #view-monthly .table-wrap{margin-left:-2px;margin-right:-2px}
+}
 @media(max-width:680px){.app-shell{display:block}.sidebar{display:none}.topbar{height:65px;padding:0 14px}.mobile-menu{display:inline-block;border:1px solid var(--border);background:#141f31;color:white;border-radius:9px;padding:8px}.page{padding:20px 13px 35px}.page-head{align-items:flex-start;flex-direction:column}.date-pill{white-space:normal}.history-row{grid-template-columns:1fr 1fr;gap:12px}.history-val{text-align:left}.history-val:last-child{text-align:right}.user-chip .username{display:none}.metrics{gap:8px}.metric-card{padding:14px}.metric-value{font-size:23px}.panel{padding:15px}.chart-amount{font-size:9px}.chart-label{font-size:9px}.chart-bar{width:20px}.recommend{padding:15px}}
-.monthly-metrics{margin:18px 0}.monthly-metrics .metric-value{font-size:clamp(22px,2.3vw,30px)}
 </style></head>
 <body>
 <section id="loginScreen" class="login-screen"><div class="login-card">
@@ -32,14 +46,14 @@
 </div></section>
 <div id="app" class="app-shell hidden">
 <aside class="sidebar"><div class="side-brand brand"><div class="brand-mark">S</div><div class="brand-name">SocialMasterKam<span class="brand-sub">Creator intelligence</span></div></div>
-<div><div class="side-label">Workspace</div><nav class="nav"><button class="active" data-view="overview"><span class="nav-icon">▦</span>Resumen</button><button data-view="history"><span class="nav-icon">◷</span>Historial de informes</button><button data-view="trends"><span class="nav-icon">⌁</span>Evolución diaria</button><button data-view="monthly"><span class="nav-icon">▤</span>Informe mensual</button></nav></div>
+<div><div class="side-label">Workspace</div><nav class="nav"><button class="active" data-view="overview"><span class="nav-icon">▦</span>Resumen</button><button data-view="history"><span class="nav-icon">◷</span>Historial de informes</button><button data-view="trends"><span class="nav-icon">⌁</span>Evolución diaria</button><button data-view="monthly"><span class="nav-icon">▤</span>Informe mensual · Septiembre</button></nav></div>
 <div><div class="side-label">Tu propiedad</div><div class="sidebar-bottom"><strong id="sideSite">sitio.com</strong><p>Dashboard privado con tus métricas y recomendaciones de contenido.</p></div></div>
 <div class="sidebar-bottom"><strong>✦ Consejo de SocialMasterKam</strong><p>El objetivo no es solo atraer clics: es generar tráfico relevante y sostenible.</p></div>
 </aside>
 <main class="main"><header class="topbar"><div style="display:flex;align-items:center;gap:12px"><button id="mobileMenu" class="mobile-menu">☰</button><div class="crumb">Workspace / <b id="crumbName">Resumen</b></div></div><div class="top-actions"><div class="user-chip"><div class="avatar" id="avatar">A</div><span class="username" id="topUser">Cuenta</span></div><button id="logout" class="logout">Salir ↗</button></div></header>
 <div class="page">
 <div class="page-head"><div><div class="eyebrow">Tu panel de rendimiento</div><h1 id="siteTitle">Mi sitio web</h1><p>Resultados de monetización y tráfico reportados, organizados en un solo lugar.</p></div><div class="date-pill">Último reporte disponible<br><b>20 de octubre de 2026</b></div></div>
-<div class="site-select hidden" id="mobileNav"><button data-view="overview" class="active">Resumen</button><button data-view="history">Historial</button><button data-view="trends">Evolución</button></div>
+<div class="site-select hidden" id="mobileNav"><button data-view="overview" class="active">Resumen</button><button data-view="history">Historial</button><button data-view="trends">Evolución</button><button data-view="monthly">Informe mensual · Septiembre</button></div>
 <section id="view-overview">
 <div class="metrics">
 <div class="metric-card"><div class="metric-top"><span>Ingresos estimados</span><span class="metric-symbol">＄</span></div><div class="metric-value" id="mRevenue">—</div><div class="metric-foot" id="mRevenueChange">Último reporte disponible</div></div>
@@ -53,46 +67,87 @@
 </section>
 <section id="view-history" class="hidden"><div class="panel history-panel"><div class="panel-head"><div><h2>Historial de informes</h2><p class="desc">Todos los cortes disponibles para esta cuenta.</p></div><span class="tag" id="historyCount">0 informes</span></div><div class="history-controls"><div class="site-select" style="margin:0"><button class="active" data-filter="all">Todos</button><button data-filter="revenue">Ingresos</button><button data-filter="views">Visitas</button><button data-filter="rpm">RPM</button></div><span class="desc">Fechas sin captura no se interpolan.</span></div><div class="history-list" id="historyList"></div></div></section>
 <section id="view-trends" class="hidden"><div class="panel"><div class="panel-head"><div><h2>Evolución diaria</h2><p class="desc">Comparación histórica por indicador</p></div><span class="tag">Histórico reportado</span></div><div class="site-select" id="trendTabs"><button class="active" data-metric="revenue">Ingresos</button><button data-metric="views">Vistas</button><button data-metric="rpm">RPM</button></div><div class="chart-wrap" id="trendChart" style="height:300px"></div><div class="table-wrap" style="margin-top:22px"><table class="data-table"><thead><tr><th>Fecha</th><th>Ingresos</th><th>Vistas</th><th>RPM</th></tr></thead><tbody id="trendTable"></tbody></table></div></div></section>
+
 <section id="view-monthly" class="hidden">
-<div class="panel">
-<div class="panel-head"><div><h2>Informe mensual · Septiembre 2026</h2><p class="desc">Resumen mensual privado de tu propiedad, basado en los datos reportados.</p></div><span class="tag">01–30 SEP 2026</span></div>
-<div class="metrics-grid monthly-metrics">
-<div class="metric-card"><div class="metric-top"><span>Ingresos estimados</span><span class="metric-symbol">$</span></div><div class="metric-value" id="monthlyRevenue">—</div><div class="metric-foot">Total del mes</div></div>
-<div class="metric-card"><div class="metric-top"><span>Vistas de página</span><span class="metric-symbol">◉</span></div><div class="metric-value" id="monthlyViews">—</div><div class="metric-foot">Volumen mensual</div></div>
-<div class="metric-card"><div class="metric-top"><span>RPM de página</span><span class="metric-symbol">↗</span></div><div class="metric-value" id="monthlyRPM">—</div><div class="metric-foot">Ingresos por cada mil vistas</div></div>
-<div class="metric-card"><div class="metric-top"><span>Periodo</span><span class="metric-symbol">◷</span></div><div class="metric-value" style="font-size:20px">Septiembre</div><div class="metric-foot">Reporte mensual</div></div>
-</div>
-<div class="recommend" style="margin-top:18px"><div class="recommend-icon">✦</div><div><h2>Lectura del mes</h2><p id="monthlyInsight">—</p></div></div>
-<p class="desc" style="margin-top:16px">Este módulo muestra únicamente la información mensual de la cuenta que inició sesión. No modifica ni reemplaza el historial diario.</p>
-</div>
+  <div class="page-head">
+    <div><div class="eyebrow">Cierre mensual</div><h1>Informe de septiembre</h1><p>Resultados del mes por sitio web · vista privada según el usuario conectado.</p></div>
+    <div class="date-pill">01 — 30 septiembre 2026</div>
+  </div>
+  <div class="metrics monthly-metrics">
+    <div class="metric-card"><div class="metric-top"><span>Ingresos del mes</span><span class="metric-symbol">$</span></div><div class="metric-value" id="monthRevenue">—</div><div class="metric-foot">Ingresos estimados de la web</div></div>
+    <div class="metric-card"><div class="metric-top"><span>Vistas de página</span><span class="metric-symbol">↗</span></div><div class="metric-value" id="monthViews">—</div><div class="metric-foot">Tráfico total del mes</div></div>
+    <div class="metric-card"><div class="metric-top"><span>RPM de página</span><span class="metric-symbol">◎</span></div><div class="metric-value" id="monthRPM">—</div><div class="metric-foot">Ingreso estimado por cada mil vistas</div></div>
+    <div class="metric-card"><div class="metric-top"><span>Promedio diario</span><span class="metric-symbol">◷</span></div><div class="metric-value" id="monthDaily">—</div><div class="metric-foot">Ingresos promedio en 30 días</div></div>
+  </div>
+  <div class="two-col">
+    <div class="panel">
+      <div class="panel-head"><div><h2>Resumen del sitio</h2><p class="desc" id="monthSiteDesc">Resultados de septiembre</p></div><span class="tag">Septiembre 2026</span></div>
+      <div class="insight-list" id="monthInsights"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><div><h2>Lectura del rendimiento</h2><p class="desc">Recomendación basada en los indicadores mensuales.</p></div></div>
+      <div class="recommend" style="margin-top:0"><div class="recommend-icon">✦</div><div><h2>Enfoque recomendado</h2><p id="monthRecommendation">—</p></div></div>
+      <p class="desc" style="line-height:1.7;margin-top:16px">El RPM refleja los ingresos estimados por cada mil vistas. Conviene evaluar en conjunto ingresos, volumen de tráfico y RPM antes de cambiar la estrategia de contenidos.</p>
+    </div>
+  </div>
+  <div class="panel history-panel">
+    <div class="panel-head"><div><h2>Ficha mensual individual</h2><p class="desc">Este reporte muestra únicamente la web asociada a la sesión iniciada.</p></div><span class="tag">Privado por usuario</span></div>
+    <div class="table-wrap"><table class="data-table monthly-table"><thead><tr><th>Sitio web</th><th>Ingresos estimados</th><th>Vistas de página</th><th>RPM pág.</th></tr></thead><tbody id="monthTable"></tbody></table></div>
+    <p class="desc" style="line-height:1.7;margin-top:14px">Fuente: captura mensual de AdSense compartida. Los ingresos son estimados y pueden ajustarse en Google AdSense.</p>
+  </div>
 </section>
-<div class="footer">Los ingresos son estimados y pueden variar. Los datos se transcribieron de las capturas e informes compartidos en la conversación; se incorporó el corte del 20 de octubre de 2026. El panel no está conectado automáticamente a Google AdSense. Para producción, utilizar autenticación segura del lado del servidor.</div>
+
+<div class="footer">Los ingresos son estimados y pueden variar. Los datos se transcribieron de las capturas e informes compartidos en la conversación; se incorporó el corte del 20 de octubre de 2026 y el informe mensual individual de septiembre de 2026. El panel no está conectado automáticamente a Google AdSense. Para producción, utilizar autenticación segura del lado del servidor.</div>
 </div></main></div>
 <script>
 /* Prototipo front-end. No alojar públicamente con estas credenciales; implementar auth de servidor para privacidad real. */
 const accounts={
-angel:{password:"Angeljimenez1219",site:"www.polisaberes.com",label:"Angel",recommendation:"Frente al 13 de octubre, ingresos, visitas y RPM subieron con fuerza. Repite los temas y formatos que atrajeron tráfico rentable, cuidando la calidad del contenido.",monthly:{revenue:722.36,views:15709,rpm:45.98},data:[
+angel:{password:"Angeljimenez1219",site:"www.polisaberes.com",label:"Angel",recommendation:"Frente al 13 de octubre, ingresos, visitas y RPM subieron con fuerza. Repite los temas y formatos que atrajeron tráfico rentable, cuidando la calidad del contenido.",data:[
 ["29 sep 2026",60.66,1035,58.61],["30 sep 2026",34.01,650,52.32],["01 oct 2026",67.64,1663,40.67],["02 oct 2026",117.02,2251,51.99],["04 oct 2026",33.94,1198,28.33],["05 oct 2026",33.60,1122,29.94],["07 oct 2026",64.78,2445,26.49],["08 oct 2026",59.44,1835,32.39],["12 oct 2026",53.48,2230,23.98],["13 oct 2026",29.13,1307,22.29],["14 oct 2026",52.02,1620,32.11],["15 oct 2026",54.20,1675,32.36],["16 oct 2026",50.17,1305,38.44],["17 oct 2026",41.65,1445,28.82],["18 oct 2026",48.27,1434,33.66],["19 oct 2026",21.47,937,22.92],["20 oct 2026",18.27,762,23.98]]},
-fly:{password:"Xit1890.",site:"rendiapp.parciales.net",label:"Fly",recommendation:"Frente al 13 de octubre, aumentaron ingresos, visitas y RPM. Aprovecha los contenidos que están generando tráfico y prueba variaciones de los temas con mejor respuesta.",monthly:{revenue:2166.26,views:279971,rpm:7.74},data:[
+fly:{password:"Xit1890.",site:"rendiapp.parciales.net",label:"Fly",recommendation:"Frente al 13 de octubre, aumentaron ingresos, visitas y RPM. Aprovecha los contenidos que están generando tráfico y prueba variaciones de los temas con mejor respuesta.",data:[
 ["29 sep 2026",60.66,6658,9.11],["30 sep 2026",55.41,6486,8.54],["01 oct 2026",65.76,8362,7.86],["02 oct 2026",119.39,14532,8.22],["04 oct 2026",186.07,18839,9.88],["05 oct 2026",95.92,12850,7.46],["07 oct 2026",91.73,12413,7.39],["08 oct 2026",68.37,10830,6.31],["12 oct 2026",53.00,7382,7.18],["13 oct 2026",32.65,4699,6.95],["14 oct 2026",54.55,6955,7.84],["15 oct 2026",63.95,7069,9.05],["16 oct 2026",98.88,10907,9.07],["17 oct 2026",396.72,46351,8.56],["18 oct 2026",132.77,16005,8.30],["19 oct 2026",69.42,9358,7.31],["20 oct 2026",52.95,7243,7.31]]},
-womy:{password:"womyapk",site:"www.parciales.net",label:"Womy",recommendation:"Los ingresos bajaron levemente frente al 13 de octubre, pero las visitas crecieron y el RPM sigue alto. Optimiza títulos y publicaciones para recuperar ingresos sin perder el tráfico ganado.",monthly:{revenue:2611.48,views:148984,rpm:17.53},data:[
+womy:{password:"womyapk",site:"www.parciales.net",label:"Womy",recommendation:"Los ingresos bajaron levemente frente al 13 de octubre, pero las visitas crecieron y el RPM sigue alto. Optimiza títulos y publicaciones para recuperar ingresos sin perder el tráfico ganado.",data:[
 ["29 sep 2026",34.51,2403,14.36],["30 sep 2026",64.14,2867,22.37],["01 oct 2026",56.78,3137,18.10],["02 oct 2026",70.17,3182,22.05],["04 oct 2026",62.20,3077,20.21],["05 oct 2026",61.42,4318,14.22],["07 oct 2026",61.42,4318,14.22],["08 oct 2026",63.35,4513,14.04],["12 oct 2026",49.69,3420,14.53],["13 oct 2026",53.54,3270,16.37],["14 oct 2026",53.01,3375,15.71],["15 oct 2026",46.34,2682,17.28],["16 oct 2026",87.12,5599,15.56],["17 oct 2026",96.85,5797,16.71],["18 oct 2026",140.48,8582,16.37],["19 oct 2026",92.21,6422,14.36],["20 oct 2026",80.60,5320,15.15]]},
-kamcito:{password:"gianna",site:"kamcitoapp.polisaberes.com",label:"Kamcito",recommendation:"Frente al 13 de octubre, los ingresos y el RPM mejoraron, pero las visitas bajaron. Mantén los contenidos rentables y trabaja en recuperar volumen de tráfico.",monthly:{revenue:1581.08,views:240366,rpm:6.58},data:[
+kamcito:{password:"gianna",site:"kamcitoapp.polisaberes.com",label:"Kamcito",recommendation:"Frente al 13 de octubre, los ingresos y el RPM mejoraron, pero las visitas bajaron. Mantén los contenidos rentables y trabaja en recuperar volumen de tráfico.",data:[
 ["29 sep 2026",51.16,7097,7.21],["30 sep 2026",43.90,4757,9.23],["01 oct 2026",36.18,4218,8.58],["02 oct 2026",57.95,6307,9.19],["04 oct 2026",52.11,5857,8.90],["05 oct 2026",31.03,3607,8.60],["07 oct 2026",27.99,3522,7.95],["08 oct 2026",26.46,3354,7.89],["12 oct 2026",29.93,3881,7.71],["13 oct 2026",18.34,2976,6.16],["14 oct 2026",19.97,2448,8.16],["15 oct 2026",15.55,2032,7.65],["16 oct 2026",12.03,1853,6.49],["17 oct 2026",13.08,1557,8.40],["18 oct 2026",12.55,1499,8.37],["19 oct 2026",7.70,935,8.24],["20 oct 2026",7.43,896,8.29]]}
 };
 accounts.fly.data[5]=["05 oct 2026",91.73,12413,7.39];
 /* Correct the reported date attached to the AdSense screenshot; the displayed cut was 7 Oct. */
 accounts.womy.data[5]=["05 oct 2026",61.42,4318,14.22];
+
+const monthlyReports={
+  angel:{site:"www.polisaberes.com",revenue:722.36,views:15709,rpm:45.98,tip:"El RPM mensual es el más alto de las webs del reporte. Prioriza temas con buena intención de búsqueda y amplía el tráfico gradualmente sin sacrificar la rentabilidad."},
+  fly:{site:"rendiapp.parciales.net",revenue:2166.26,views:279971,rpm:7.74,tip:"El volumen de visitas es una fortaleza importante. Enfócate en sostener el tráfico y probar mejoras de títulos, estructura y experiencia de lectura para elevar el RPM."},
+  womy:{site:"www.parciales.net",revenue:2611.48,views:148984,rpm:17.53,tip:"Es la web con mayores ingresos del conjunto mensual. Mantén los contenidos que ya atraen visitas y busca escalar su alcance con publicaciones consistentes."},
+  kamcito:{site:"kamcitoapp.polisaberes.com",revenue:1581.08,views:240366,rpm:6.58,tip:"La web registra un volumen de tráfico considerable. La prioridad es mejorar la rentabilidad por visita con optimización editorial y revisión de las páginas con mayor tráfico."}
+};
+
 let currentUser=null,currentView="overview",historyFilter="all",trendMetric="revenue";
 const $=id=>document.getElementById(id),fmtMoney=n=>"US$"+Number(n).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}),fmtNum=n=>Number(n).toLocaleString("es-CO");
 function metricValue(d,k){return k==="revenue"?d[1]:k==="views"?d[2]:d[3]}
 function metricLabel(k){return k==="revenue"?"Ingresos":k==="views"?"Vistas":"RPM"}
 function signedChange(now,old,format){let d=now-old,p=old?d/old*100:0;return {d,p,txt:(d>=0?"↑ ":"↓ ")+format(Math.abs(d))+" ("+(d>=0?"+":"")+p.toFixed(1)+"%)",cls:d>0?"positive":d<0?"negative":"neutral"}}
 function dateShort(s){return s.replace(" 2026","")}
-function setView(view){currentView=view;["overview","history","trends","monthly"].forEach(v=>$("view-"+v).classList.toggle("hidden",v!==view));document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===view));$("crumbName").textContent=view==="overview"?"Resumen":view==="history"?"Historial de informes":view==="trends"?"Evolución diaria":"Informe mensual";if(view==="history")renderHistory();if(view==="trends")renderTrends(trendMetric);if(view==="monthly")renderMonthly()}
+function setView(view){currentView=view;["overview","history","trends","monthly"].forEach(v=>$("view-"+v).classList.toggle("hidden",v!==view));document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===view));$("crumbName").textContent=view==="overview"?"Resumen":view==="history"?"Historial de informes":view==="trends"?"Evolución diaria":"Informe mensual · Septiembre";if(view==="history")renderHistory();if(view==="trends")renderTrends(trendMetric);if(view==="monthly")renderMonthly()}
 function renderChart(el,data,key){let vals=data.map(d=>metricValue(d,key)),max=Math.max(...vals,1);el.innerHTML=data.map(d=>{let v=metricValue(d,key),height=Math.max(3,v/max*175),label=key==="views"?fmtNum(v):fmtMoney(v);return `<div class="chart-col" title="${d[0]} · ${metricLabel(key)}: ${label}"><div class="chart-amount">${key==="views"?fmtNum(v):fmtMoney(v).replace("US$","$")}</div><div class="chart-bar-area"><div class="chart-bar" style="height:${height}px"></div></div><div class="chart-label">${dateShort(d[0])}</div></div>`}).join("")}
 function renderOverview(){let a=accounts[currentUser],data=a.data,latest=data[data.length-1],prev=data[data.length-2];$("siteTitle").textContent=a.site;$("sideSite").textContent=a.site;$("topUser").textContent=a.label;$("avatar").textContent=a.label[0].toUpperCase();$("mRevenue").textContent=fmtMoney(latest[1]);$("mViews").textContent=fmtNum(latest[2]);$("mRPM").textContent=fmtMoney(latest[3]);let r=signedChange(latest[1],prev[1],fmtMoney),v=signedChange(latest[2],prev[2],fmtNum),m=signedChange(latest[3],prev[3],fmtMoney);[["mRevenueChange",r],["mViewsChange",v],["mRPMChange",m]].forEach(([id,o])=>{$(id).textContent=o.txt+" vs. "+dateShort(prev[0]);$(id).className="metric-foot "+o.cls});$("mPct").textContent=(r.p>=0?"+":"")+r.p.toFixed(1)+"%";$("mPct").className="metric-value "+r.cls;$("recommendation").textContent=a.recommendation;$("comparisonDates").textContent=dateShort(prev[0])+" vs. "+dateShort(latest[0]);$("comparison").innerHTML=[["Ingresos",fmtMoney(prev[1]),fmtMoney(latest[1]),r],["Vistas",fmtNum(prev[2]),fmtNum(latest[2]),v],["RPM",fmtMoney(prev[3]),fmtMoney(latest[3]),m]].map(([name,old,now,o])=>`<div class="insight"><div><span>${name}</span><div style="font-size:11px;color:#6f829d;margin-top:5px">${old} → ${now}</div></div><strong class="${o.cls}">${o.txt}</strong></div>`).join("");renderChart($("incomeChart"),data,"revenue")}
-function renderMonthly(){let a=accounts[currentUser],m=a.monthly;if(!m){$("monthlyRevenue").textContent="Sin datos";$("monthlyViews").textContent="—";$("monthlyRPM").textContent="—";$("monthlyInsight").textContent="No hay un informe mensual asociado a esta cuenta.";return}$("monthlyRevenue").textContent=fmtMoney(m.revenue);$("monthlyViews").textContent=fmtNum(m.views);$("monthlyRPM").textContent=fmtMoney(m.rpm);let site=a.site;$("monthlyInsight").textContent=site==="www.polisaberes.com"?"El sitio registra un RPM mensual alto. Conviene mantener los temas con mejor rentabilidad y trabajar en ampliar el volumen de visitas.":site==="rendiapp.parciales.net"?"La mayor oportunidad está en sostener el volumen de tráfico y probar mejoras de monetización, ya que el RPM mensual es menor que el de otras propiedades.":site==="www.parciales.net"?"Es la propiedad con mayores ingresos mensuales del grupo reportado. Mantén los contenidos que atraen visitas y aprovecha su RPM para seguir optimizando la rentabilidad.":"El sitio acumula un volumen importante de visitas. Prioriza contenidos con buen rendimiento y revisa oportunidades para elevar el RPM mensual."}
+function renderMonthly(){
+  const a=monthlyReports[currentUser];
+  if(!a){$("monthRevenue").textContent="No disponible";$("monthViews").textContent="—";$("monthRPM").textContent="—";$("monthDaily").textContent="—";$("monthSiteDesc").textContent="No hay un reporte mensual asignado a esta sesión."; $("monthInsights").innerHTML="";$("monthRecommendation").textContent="No hay datos mensuales disponibles para este usuario."; $("monthTable").innerHTML="";return}
+  $("monthRevenue").textContent=fmtMoney(a.revenue);
+  $("monthViews").textContent=fmtNum(a.views);
+  $("monthRPM").textContent=fmtMoney(a.rpm);
+  $("monthDaily").textContent=fmtMoney(a.revenue/30);
+  $("monthSiteDesc").textContent=a.site+" · 30 días";
+  $("monthInsights").innerHTML=[
+    ["Ingresos estimados",fmtMoney(a.revenue)],
+    ["Vistas de página",fmtNum(a.views)],
+    ["RPM de página",fmtMoney(a.rpm)],
+    ["Promedio diario de ingresos",fmtMoney(a.revenue/30)]
+  ].map(([k,v])=>`<div class="insight"><span>${k}</span><strong>${v}</strong></div>`).join("");
+  $("monthRecommendation").textContent=a.tip;
+  $("monthTable").innerHTML=`<tr><td class="site-name">${a.site}</td><td>${fmtMoney(a.revenue)}</td><td>${fmtNum(a.views)}</td><td>${fmtMoney(a.rpm)}</td></tr>`;
+}
 function renderHistory(){let data=accounts[currentUser].data;$("historyCount").textContent=data.length+" informes";let filtered=data.filter(d=>historyFilter==="all"||historyFilter==="revenue"&&d[1]!=null||historyFilter==="views"&&d[2]!=null||historyFilter==="rpm"&&d[3]!=null);$("historyList").innerHTML=[...filtered].reverse().map(d=>`<div class="history-row"><div><div class="history-date">${d[0]}</div><div class="history-note">Reporte de rendimiento recibido</div></div><div class="history-val"><span>Ingresos</span><strong>${fmtMoney(d[1])}</strong></div><div class="history-val"><span>Vistas</span><strong>${fmtNum(d[2])}</strong></div><div class="history-val"><span>RPM</span><strong>${fmtMoney(d[3])}</strong></div></div>`).join("")||'<div class="no-data">No hay datos para mostrar.</div>'}
 function renderTrends(key){trendMetric=key;document.querySelectorAll("[data-metric]").forEach(b=>b.classList.toggle("active",b.dataset.metric===key));let data=accounts[currentUser].data;renderChart($("trendChart"),data,key);$("trendTable").innerHTML=[...data].reverse().map(d=>`<tr><td>${d[0]}</td><td>${fmtMoney(d[1])}</td><td>${fmtNum(d[2])}</td><td>${fmtMoney(d[3])}</td></tr>`).join("")}
 function login(u){currentUser=u;$("loginScreen").classList.add("hidden");$("app").classList.remove("hidden");setView("overview");renderOverview()}
